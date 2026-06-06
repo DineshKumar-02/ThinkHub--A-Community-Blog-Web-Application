@@ -101,8 +101,8 @@ npm install
 
 Create a `.env` file inside backend:
 ```
-MONGO_URI=mongodb://localhost:27017/thinkhub
-PORT=5000
+MONGO_URI= localhost/projectname/
+PORT= mongdbportdefualtport
 ```
 
 Run backend:
@@ -119,7 +119,7 @@ npm run dev
 
 **4. Open browser:**
 ```
-http://localhost:5173
+http://localhost:5173 
 ```
 
 ---
