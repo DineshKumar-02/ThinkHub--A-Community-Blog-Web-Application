@@ -28,7 +28,8 @@ function Signup() {
   return (
     <div style={styles.container}>
       <div style={styles.box}>
-        <h2 style={styles.title}>📝 ThinkHub</h2>
+        <h2 style={styles.title}>📝 ThinkHub – A Community Blog Web Application
+</h2>
         <p style={styles.sub}>Create your account</p>
         <input style={styles.input} placeholder="Name"  onChange={e => setName(e.target.value)} />
         <input style={styles.input} placeholder="Email" type="email" onChange={e => setEmail(e.target.value)} />
