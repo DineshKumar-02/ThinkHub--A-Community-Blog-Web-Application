@@ -12,7 +12,7 @@ function Topic() {
 
   // Load posts from backend
   useEffect(() => {
-    fetch("http://localhost:5000/api/posts/" + name)
+    fetch("https://thinkhub-a-community-blog-web-application.onrender.com/api/posts/" + name)
       .then(res => res.json())
       .then(data => setPosts(data));
   }, [name]);
@@ -20,7 +20,7 @@ function Topic() {
   async function submitPost() {
     if (!title || !desc) { alert("Fill all fields!"); return; }
 
-    const res  = await fetch("http://localhost:5000/api/posts/add", {
+    const res  = await ffetch("https://thinkhub-a-community-blog-web-application.onrender.com/api/posts/add", {
       method:  "POST",
       headers: { "Content-Type": "application/json" },
       body:    JSON.stringify({ title, desc, topic: name })
@@ -34,7 +34,8 @@ function Topic() {
   }
 
   async function deletePost(id) {
-    await fetch("http://localhost:5000/api/posts/" + id, { method: "DELETE" });
+    await fetch("https://thinkhub-a-community-blog-web-application.onrender.com/api/posts/" + id
+, { method: "DELETE" });
     setPosts(posts.filter(p => p._id !== id));
   }
 
