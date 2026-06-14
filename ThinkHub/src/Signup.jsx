@@ -11,11 +11,11 @@ function Signup() {
     if (!name || !email || !age) { alert("Please fill all fields!"); return; }
     if (age < 13) { alert("You must be at least 13!"); return; }
 
-    const res  = await fetch("https://thinkhub-a-community-blog-web-application.onrender.com/api/users/signup", {
-      method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ name, email, age })
-    });
+    const res = await fetch("https://thinkhub-a-community-blog-web-application.onrender.com/api/users/signup", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ name, email, age })
+});
     const data = await res.json();
 
     if (data.success) {
