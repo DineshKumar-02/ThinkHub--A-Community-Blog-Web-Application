@@ -12,7 +12,7 @@
 
 ## 🌐 Live Demo
 
-🔗 **Frontend:** [thinkhub-shareyourinsights.netlify.app](https://thinkhub-a-community-blog-web.onrender.com/)  
+🔗 **Frontend:** [thinkhub-shareyourinsights.netlify.app](https://thinkhub-a-community-blog-web.onrender.com/)   
 
 ---
 
@@ -154,7 +154,7 @@ http://localhost:5173
 - Managing real data in MongoDB using Mongoose
 - React Router DOM for client-side navigation
 - Git version control and GitHub for project management
-- Deploying a live project on Netlify
+- Deploying a live project on Render
 
 ---
 
