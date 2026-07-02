@@ -12,7 +12,7 @@
 
 ## 🌐 Live Demo
 
-🔗 **Frontend:** [thinkhub-shareyourinsights.netlify.app](https://thinkhub-a-community-blog-web.onrender.com/)   
+🔗 **Frontend:**(https://thinkhub-a-community-blog-web.onrender.com/)   
 
 ---
 
