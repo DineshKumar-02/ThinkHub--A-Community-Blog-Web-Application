@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 function About() {
   const navigate = useNavigate();
-  return (
+  return ( 
     <div>
       <nav style={styles.nav}>
         <span style={styles.logo}>📝 ThinkHub</span>
