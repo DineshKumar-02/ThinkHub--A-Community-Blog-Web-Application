@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "./config";
 
 function Signup() {
   const [name, setName]   = useState("");
@@ -11,25 +12,23 @@ function Signup() {
     if (!name || !email || !age) { alert("Please fill all fields!"); return; }
     if (age < 13) { alert("You must be at least 13!"); return; }
 
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/users/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },    
+        body: JSON.stringify({ name, email, age })
+      });
 
-    const res = await fetch("https://thinkhub-a-community-blog-web-application.onrender.com/api/users/signup", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },    
-  body: JSON.stringify({ name, email, age })
-});
+      const data = await res.json();
 
-    const res  = await fetch("http://localhost:5000/api/users/signup", { 
-      method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ name, email, age })
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      navigate("/home");
-    } else {
-      alert("Something went wrong!");
+      if (res.ok && data.success) {
+        navigate("/home");
+      } else {
+        alert(data.error || data.message || "Something went wrong!");
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("Failed to connect to the server. Please try again later.");
     }
   }
 

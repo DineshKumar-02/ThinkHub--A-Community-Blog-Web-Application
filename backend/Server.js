@@ -13,7 +13,10 @@ app.get("/", (req, res) => {
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected!"))
-  .catch(err => console.log(err));
+  .catch(err => {
+    console.error("Database connection error:", err);
+    process.exit(1);
+  });
 
 app.use("/api/users", require("./routes/userRoute"));
 app.use("/api/posts", require("./routes/postRoute"));

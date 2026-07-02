@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "./config";
 
 function Topic() {
   const { name }                = useParams();
@@ -12,31 +13,48 @@ function Topic() {
 
   // Load posts from backend
   useEffect(() => {
-    fetch("https://thinkhub-a-community-blog-web-application.onrender.com/api/posts/" + name)
+    fetch(`${API_BASE_URL}/api/posts/${name}`)
       .then(res => res.json())
-      .then(data => setPosts(data));
+      .then(data => setPosts(Array.isArray(data) ? data : []))
+      .catch(err => console.error("Error fetching posts:", err));
   }, [name]);
 
   async function submitPost() {
     if (!title || !desc) { alert("Fill all fields!"); return; }
 
-    const res  = await ffetch("https://thinkhub-a-community-blog-web-application.onrender.com/api/posts/add", {
-      method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ title, desc, topic: name })
-    });
-    const data = await res.json();
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/posts/add`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, desc, topic: name })
+      });
+      const data = await res.json();
 
-    if (data.success) {
-      setPosts([data.post, ...posts]);
-      setTitle(""); setDesc(""); setShowForm(false);
+      if (data.success) {
+        setPosts([data.post, ...posts]);
+        setTitle(""); setDesc(""); setShowForm(false);
+      } else {
+        alert(data.error || "Failed to add post");
+      }
+    } catch (err) {
+      console.error("Add post error:", err);
+      alert("Failed to submit post. Please try again.");
     }
   }
 
   async function deletePost(id) {
-    await fetch("https://thinkhub-a-community-blog-web-application.onrender.com/api/posts/" + id
-, { method: "DELETE" });
-    setPosts(posts.filter(p => p._id !== id));
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/posts/${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        setPosts(posts.filter(p => p._id !== id));
+      } else {
+        alert("Failed to delete post");
+      }
+    } catch (err) {
+      console.error("Delete post error:", err);
+      alert("Failed to delete post. Please try again.");
+    }
   }
 
   return (
