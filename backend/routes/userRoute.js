@@ -4,7 +4,7 @@ const User = require("../models/User");
 const router = express.Router();
 
 router.post("/signup", async (req, res) => {
-  try {
+  try { 
     const { name, email, age } = req.body;
 
     // Validation
@@ -35,8 +35,9 @@ router.post("/signup", async (req, res) => {
 
   } catch (err) {
     console.log("Signup Error:", err);
-    return res.status(500).json({ success: false, error: err.message });
+    return res.status(500).json({ success: false, error: err.message }); 
   }
 });
 
 module.exports = router;
+

@@ -34,4 +34,4 @@ const styles = {
   footer:    { background:"#1a1a2e", color:"#aaa", textAlign:"center", padding:"20px", marginTop:"60px" }
 };
 
-export default About; 
+export default About;

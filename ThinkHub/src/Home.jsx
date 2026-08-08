@@ -15,7 +15,7 @@ function Home() {
   return (
     <div>
       <nav style={styles.nav}>
-        <span style={styles.logo}>📝 ThinkHub</span>
+        <span style={styles.logo}>📝 ThinkHub</span> 
         <div>
           <button style={styles.navBtn} onClick={() => navigate("/about")}>About</button>
           <button style={styles.navBtn} onClick={() => navigate("/contact")}>Contact</button>
@@ -43,6 +43,8 @@ function Home() {
   );
 }
 
+
+
 const styles = {
   nav:       { background:"#6c63ff", padding:"16px 24px", color:"white", display:"flex", justifyContent:"space-between", alignItems:"center" },
   logo:      { fontSize:"20px", fontWeight:"bold" },
@@ -54,4 +56,4 @@ const styles = {
   footer:    { background:"#1a1a2e", color:"#aaa", textAlign:"center", padding:"20px", marginTop:"60px" }
 };
 
-export default Home;
+export default Home; 

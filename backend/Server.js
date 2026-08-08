@@ -15,12 +15,13 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected!"))
   .catch(err => {
     console.error("Database connection error:", err);
-    process.exit(1);
+    process.exit(1); 
   });
 
 app.use("/api/users", require("./routes/userRoute"));
-app.use("/api/posts", require("./routes/postRoute"));
+app.use("/api/posts", require("./routes/postRoute")); 
 
 app.listen(process.env.PORT, () => {
   console.log("Server running on port " + process.env.PORT);
 });
+
