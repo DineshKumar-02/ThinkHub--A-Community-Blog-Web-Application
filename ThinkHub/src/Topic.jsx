@@ -6,6 +6,7 @@ function Topic() {
   const { name }                = useParams();
   const navigate                = useNavigate();
   const [posts, setPosts]       = useState([]);
+  const [loading, setLoading]   = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [title, setTitle]       = useState("");
   const [desc, setDesc]         = useState("");
@@ -13,10 +14,12 @@ function Topic() {
 
   // Load posts from backend
   useEffect(() => {
+    setLoading(true);
     fetch(`${API_BASE_URL}/api/posts/${name}`)
       .then(res => res.json())
       .then(data => setPosts(Array.isArray(data) ? data : []))
-      .catch(err => console.error("Error fetching posts:", err));
+      .catch(err => console.error("Error fetching posts:", err))
+      .finally(() => setLoading(false));
   }, [name]);
 
   async function submitPost() {
@@ -41,7 +44,7 @@ function Topic() {
       alert("Failed to submit post. Please try again.");
     }
   }
-
+  
   async function deletePost(id) {
     try {
       const res = await fetch(`${API_BASE_URL}/api/posts/${id}`, { method: "DELETE" });
@@ -82,16 +85,22 @@ function Topic() {
 
       <div style={styles.container}>
         <h2>{name} Posts</h2>
-        {posts.length === 0 && <p style={{color:"#888"}}>No posts yet. Be the first! 🙌</p>}
-        <div style={styles.grid}>
-          {posts.map((p, i) => (
-            <div key={i} style={styles.card} onClick={() => setSelected(p)}>
-              <h3>{p.title}</h3>
-              <p>{p.desc.slice(0, 80)}...</p>
-              <button style={styles.del} onClick={e => { e.stopPropagation(); deletePost(p._id); }}>🗑️ Delete</button>
+        {loading ? (
+          <p style={{color:"#6c63ff", fontWeight:"bold"}}>Loading posts... ⏳</p>
+        ) : (
+          <>
+            {posts.length === 0 && <p style={{color:"#888"}}>No posts yet. Be the first! 🙌</p>}
+            <div style={styles.grid}>
+              {posts.map((p, i) => (
+                <div key={i} style={styles.card} onClick={() => setSelected(p)}>
+                  <h3>{p.title}</h3>
+                  <p>{p.desc.slice(0, 80)}...</p>
+                  <button style={styles.del} onClick={e => { e.stopPropagation(); deletePost(p._id); }}>🗑️ Delete</button>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </div>
 
       {selected && (
