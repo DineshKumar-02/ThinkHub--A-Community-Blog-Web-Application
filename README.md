@@ -9,7 +9,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](#)
 [![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](#)
 [![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](#)
-[![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](#)
+[![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](#)
 
 </div>
 
@@ -17,11 +17,10 @@
 
 ## 🌐 Live Demo & Deployment Links
 
-* 🔗 **Frontend Site:** [thinkhub-shareyourinsights.netlify.app](https://thinkhub-shareyourinsights.netlify.app)
+* 🔗 **Live Site:** [thinkhub-a-community-blog-web.onrender.com](https://thinkhub-a-community-blog-web.onrender.com/)
 * 🔗 **Backend API:** [thinkhub-a-community-blog-web-application.onrender.com](https://thinkhub-a-community-blog-web-application.onrender.com/)
 
----
-
+--
 ## 📌 About The Project
 
 **ThinkHub** is a responsive full-stack MERN blogging application developed during a **Web Developer Internship at Codec Technologies Pvt. Ltd.** 
