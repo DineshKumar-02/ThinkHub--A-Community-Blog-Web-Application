@@ -1,13 +1,20 @@
 import { useNavigate } from "react-router-dom";
 
 const topics = [
-  { name: "Lifestyle", emoji: "🧘" }, { name: "Health", emoji: "❤️" },
-  { name: "Fitness", emoji: "💪" },   { name: "Tech", emoji: "💻" },
-  { name: "AI", emoji: "🤖" },        { name: "Cooking", emoji: "🍳" },
-  { name: "Entertainment", emoji: "🎬" }, { name: "Movie Reviews", emoji: "🎥" },
-  { name: "Music", emoji: "🎵" },     { name: "Podcast Reviews", emoji: "🎙️" },
-  { name: "Investments", emoji: "📈" }, { name: "Money", emoji: "💰" },
-  { name: "Finance", emoji: "🏦" },   { name: "Jokes", emoji: "😂" },
+  { name: "Lifestyle", emoji: "🧘", bg: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=350&auto=format&fit=crop&q=60" },
+  { name: "Health", emoji: "❤️", bg: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=350&auto=format&fit=crop&q=60" },
+  { name: "Fitness", emoji: "💪", bg: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=350&auto=format&fit=crop&q=60" },
+  { name: "Tech", emoji: "💻", bg: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=350&auto=format&fit=crop&q=60" },
+  { name: "AI", emoji: "🤖", bg: "https://images.unsplash.com/photo-1677442136019-21780efad99a?w=350&auto=format&fit=crop&q=60" },
+  { name: "Cooking", emoji: "🍳", bg: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=350&auto=format&fit=crop&q=60" },
+  { name: "Entertainment", emoji: "🎬", bg: "https://images.unsplash.com/photo-1496345875659-11f7dd282d1d?w=350&auto=format&fit=crop&q=60" },
+  { name: "Movie Reviews", emoji: "🎥", bg: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=350&auto=format&fit=crop&q=60" },
+  { name: "Music", emoji: "🎵", bg: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=350&auto=format&fit=crop&q=60" },
+  { name: "Podcast Reviews", emoji: "🎙️", bg: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=350&auto=format&fit=crop&q=60" },
+  { name: "Investments", emoji: "📈", bg: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=350&auto=format&fit=crop&q=60" },
+  { name: "Money", emoji: "💰", bg: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=350&auto=format&fit=crop&q=60" },
+  { name: "Finance", emoji: "🏦", bg: "https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?w=350&auto=format&fit=crop&q=60" },
+  { name: "Jokes", emoji: "😂", bg: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=350&auto=format&fit=crop&q=60" },
 ];
 
 function Home() {
@@ -35,9 +42,31 @@ function Home() {
               key={i} 
               className="glass-card glass-card-hover topic-tile" 
               onClick={() => navigate("/topic/" + t.name)}
+              style={{ position: "relative", overflow: "hidden" }}
             >
-              <span className="topic-tile-emoji">{t.emoji}</span>
-              <span className="topic-tile-name">{t.name}</span>
+              {/* Blurred Image Background */}
+              <div 
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  backgroundImage: `url(${t.bg})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  filter: "blur(3px) brightness(0.65)",
+                  transform: "scale(1.15)",
+                  zIndex: 1
+                }}
+              />
+              {/* Card Label and Emoji Content */}
+              <div style={{ position: "relative", zIndex: 2 }}>
+                <div className="topic-tile-emoji">{t.emoji}</div>
+                <div className="topic-tile-name" style={{ color: "#ffffff", textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>
+                  {t.name}
+                </div>
+              </div>
             </div>
           ))}
         </div>
