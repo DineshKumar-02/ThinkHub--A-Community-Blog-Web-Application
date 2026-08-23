@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "./config";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 function Home() {
   const navigate = useNavigate();
@@ -41,6 +42,34 @@ function Home() {
         {/* Global Recent Blogs Flexbox feed */}
         <section>
           <h2 className="section-title">Community Stories</h2>
+          
+          {/* Interactive Topic Filter Chips */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", margin: "16px 0 24px 0" }}>
+            <span style={{ fontSize: "14px", color: "var(--text-muted)", alignSelf: "center", marginRight: "8px" }}>
+              Filter by topic:
+            </span>
+            {["All", "Tech", "AI", "Lifestyle", "Finance", "Music", "Cooking"].map((topic, i) => {
+              const isActive = (searchQuery.toLowerCase() === topic.toLowerCase()) || (topic === "All" && searchQuery === "");
+              return (
+                <button 
+                  key={i} 
+                  className="btn-secondary" 
+                  style={{ 
+                    padding: "4px 12px", 
+                    fontSize: "12px", 
+                    borderRadius: "15px",
+                    background: isActive ? "var(--color-primary)" : "",
+                    color: isActive ? "#ffffff" : "",
+                    borderColor: isActive ? "var(--color-primary)" : ""
+                  }}
+                  onClick={() => setSearchQuery(topic === "All" ? "" : topic)}
+                >
+                  {topic}
+                </button>
+              );
+            })}
+          </div>
+
           {postsLoading ? (
             <p style={{ color: "var(--color-primary)", fontWeight: "600", marginTop: "20px" }}>
               Loading stories... ⏳
@@ -102,9 +131,8 @@ function Home() {
         </div>
       )}
 
-      <footer className="app-footer">
-        <p>© 2026 ThinkHub. All rights reserved.</p>
-      </footer>
+      {/* Reusable Enhanced Footer */}
+      <Footer />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 function About() {
   const navigate = useNavigate();
@@ -17,9 +18,7 @@ function About() {
         <p className="info-text">No rules, no pressure. Just real people sharing real stuff. Every voice matters here. 🙌</p>
       </main>
 
-      <footer className="app-footer">
-        <p>© 2026 ThinkHub. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

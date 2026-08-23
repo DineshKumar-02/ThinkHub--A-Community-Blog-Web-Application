@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 function Contact() {
   const navigate = useNavigate();
@@ -19,9 +20,7 @@ function Contact() {
         </div>
       </main>
 
-      <footer className="app-footer">
-        <p>© 2026 ThinkHub. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

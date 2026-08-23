@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "./config";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 function Topic() {
   const { name }                = useParams();
@@ -173,9 +174,7 @@ function Topic() {
         </div>
       )}
 
-      <footer className="app-footer">
-        <p>© 2026 ThinkHub. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   );
 }
