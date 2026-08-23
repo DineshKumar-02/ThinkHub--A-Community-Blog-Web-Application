@@ -11,6 +11,7 @@ function Topic() {
   const [title, setTitle]       = useState("");
   const [desc, setDesc]         = useState("");
   const [selected, setSelected] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   // Load posts from backend
   useEffect(() => {
@@ -22,9 +23,11 @@ function Topic() {
       .finally(() => setLoading(false));
   }, [name]);
 
-  async function submitPost() {
+  async function submitPost(e) {
+    e.preventDefault();
     if (!title || !desc) { alert("Fill all fields!"); return; }
 
+    setSubmitting(true);
     try {
       const res = await fetch(`${API_BASE_URL}/api/posts/add`, {
         method: "POST",
@@ -35,17 +38,22 @@ function Topic() {
 
       if (data.success) {
         setPosts([data.post, ...posts]);
-        setTitle(""); setDesc(""); setShowForm(false);
+        setTitle(""); 
+        setDesc(""); 
+        setShowForm(false);
       } else {
         alert(data.error || "Failed to add post");
       }
     } catch (err) {
       console.error("Add post error:", err);
       alert("Failed to submit post. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
   }
   
   async function deletePost(id) {
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
     try {
       const res = await fetch(`${API_BASE_URL}/api/posts/${id}`, { method: "DELETE" });
       const data = await res.json();
@@ -61,81 +69,117 @@ function Topic() {
   }
 
   return (
-    <div>
-      <nav style={styles.nav}>
-        <span style={styles.logo}>📝 ThinkHub</span>
-        <button style={styles.back} onClick={() => navigate("/home")}>← Back</button>
+    <div className="animate-fade">
+      <nav className="navbar">
+        <span className="nav-logo" onClick={() => navigate("/home")}>📝 ThinkHub</span>
+        <button className="btn-secondary" onClick={() => navigate("/home")}>← Back</button>
       </nav>
 
-      <div style={styles.hero}>
-        <h1>{name}</h1>
-        <p>Share your thoughts on {name}!</p>
-        <button style={styles.addBtn} onClick={() => setShowForm(true)}>➕ Add Post</button>
-      </div>
+      <header className="hero-section">
+        <h1 className="hero-title">{name}</h1>
+        <p className="hero-sub">Explore articles and share your thoughts on {name}!</p>
+        {!showForm && (
+          <button className="btn-primary animate-fade" onClick={() => setShowForm(true)}>
+            ➕ Create a Post
+          </button>
+        )}
+      </header>
 
       {showForm && (
-        <div style={styles.formBox}>
-          <h3>New Post</h3>
-          <input style={styles.input} placeholder="Title" onChange={e => setTitle(e.target.value)} />
-          <textarea style={styles.input} placeholder="Write something..." rows="4" onChange={e => setDesc(e.target.value)} />
-          <button style={styles.btn} onClick={submitPost}>Submit 🚀</button>
-          <button style={styles.cancel} onClick={() => setShowForm(false)}>Cancel</button>
-        </div>
+        <form className="glass-card form-box animate-scale" onSubmit={submitPost}>
+          <h3>New Post in {name}</h3>
+          <div className="form-group">
+            <label className="form-label">Post Title</label>
+            <input 
+              className="form-input" 
+              placeholder="Give your article a catchy title" 
+              value={title}
+              onChange={e => setTitle(e.target.value)} 
+              disabled={submitting}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Content Description</label>
+            <textarea 
+              className="form-input" 
+              placeholder="What's on your mind? Share your story..." 
+              rows="6" 
+              value={desc}
+              onChange={e => setDesc(e.target.value)} 
+              disabled={submitting}
+              required
+            />
+          </div>
+          <div style={{ display: "flex", gap: "10px", marginTop: "24px" }}>
+            <button type="submit" className="btn-primary" style={{ flex: 1 }} disabled={submitting}>
+              {submitting ? "Publishing..." : "Publish Post 🚀"}
+            </button>
+            <button type="button" className="btn-secondary" onClick={() => setShowForm(false)} disabled={submitting}>
+              Cancel
+            </button>
+          </div>
+        </form>
       )}
 
-      <div style={styles.container}>
-        <h2>{name} Posts</h2>
+      <main className="app-container">
+        <h2 className="section-title">Community Posts</h2>
         {loading ? (
-          <p style={{color:"#6c63ff", fontWeight:"bold"}}>Loading posts... ⏳</p>
+          <p style={{ color: "var(--color-primary)", fontWeight: "600", fontSize: "16px", marginTop: "20px" }}>
+            Loading articles... ⏳
+          </p>
         ) : (
           <>
-            {posts.length === 0 && <p style={{color:"#888"}}>No posts yet. Be the first! 🙌</p>}
-            <div style={styles.grid}>
+            {posts.length === 0 && (
+              <p style={{ color: "var(--text-muted)", marginTop: "20px", fontSize: "15px" }}>
+                No articles published under this topic yet. Be the first to share! 🙌
+              </p>
+            )}
+            <div className="posts-grid">
               {posts.map((p, i) => (
-                <div key={i} style={styles.card} onClick={() => setSelected(p)}>
-                  <h3>{p.title}</h3>
-                  <p>{p.desc.slice(0, 80)}...</p>
-                  <button style={styles.del} onClick={e => { e.stopPropagation(); deletePost(p._id); }}>🗑️ Delete</button>
-                </div>
+                <article key={i} className="glass-card glass-card-hover post-card" onClick={() => setSelected(p)}>
+                  <h3 className="post-card-title">{p.title}</h3>
+                  <p className="post-card-desc">
+                    {p.desc && p.desc.length > 120 ? p.desc.slice(0, 120) + "..." : p.desc}
+                  </p>
+                  <div className="post-card-footer">
+                    <span style={{ fontSize: "12px", color: "var(--text-dark)" }}>
+                      {p.created_at ? new Date(p.created_at).toLocaleDateString() : "Just now"}
+                    </span>
+                    <button 
+                      className="btn-danger" 
+                      onClick={e => { e.stopPropagation(); deletePost(p._id); }}
+                    >
+                      🗑️ Delete
+                    </button>
+                  </div>
+                </article>
               ))}
             </div>
           </>
         )}
-      </div>
+      </main>
 
       {selected && (
-        <div style={styles.overlay}>
-          <div style={styles.full}>
-            <button style={styles.close} onClick={() => setSelected(null)}>✕ Close</button>
-            <h2>{selected.title}</h2>
-            <p>{selected.desc}</p>
+        <div className="modal-overlay animate-fade" onClick={() => setSelected(null)}>
+          <div className="glass-card modal-content animate-scale" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setSelected(null)}>✕</button>
+            <h2 className="modal-title">{selected.title}</h2>
+            <div style={{ display: "flex", gap: "10px", marginBottom: "20px", color: "var(--text-dark)", fontSize: "13px" }}>
+              <span>Category: <strong>{name}</strong></span>
+              <span>•</span>
+              <span>Published: {selected.created_at ? new Date(selected.created_at).toLocaleDateString() : "Unknown"}</span>
+            </div>
+            <div className="modal-body">{selected.desc}</div>
           </div>
         </div>
       )}
 
-      <footer style={styles.footer}><p>© 2026 ThinkHub. All rights reserved.</p></footer>
+      <footer className="app-footer">
+        <p>© 2026 ThinkHub. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
-
-const styles = {
-  nav:       { background:"#6c63ff", padding:"16px 24px", color:"white", display:"flex", justifyContent:"space-between", alignItems:"center" },
-  logo:      { fontSize:"20px", fontWeight:"bold" },
-  back:      { background:"white", color:"#6c63ff", border:"none", padding:"6px 14px", borderRadius:"8px", cursor:"pointer" },
-  hero:      { background:"#6c63ff", color:"white", textAlign:"center", padding:"50px 20px" },
-  addBtn:    { background:"white", color:"#6c63ff", border:"none", padding:"10px 24px", borderRadius:"8px", fontWeight:"bold", cursor:"pointer", marginTop:"16px" },
-  formBox:   { background:"white", maxWidth:"500px", margin:"30px auto", padding:"30px", borderRadius:"12px", boxShadow:"0 4px 12px rgba(0,0,0,0.1)" },
-  input:     { width:"100%", padding:"10px", marginBottom:"14px", border:"1px solid #ccc", borderRadius:"8px", fontSize:"15px", boxSizing:"border-box" },
-  btn:       { width:"100%", padding:"10px", background:"#6c63ff", color:"white", border:"none", borderRadius:"8px", cursor:"pointer", marginBottom:"8px" },
-  cancel:    { width:"100%", padding:"10px", background:"#ccc", color:"#333", border:"none", borderRadius:"8px", cursor:"pointer" },
-  container: { maxWidth:"900px", margin:"40px auto", padding:"0 20px" },
-  grid:      { display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(250px, 1fr))", gap:"20px", marginTop:"20px" },
-  card:      { background:"white", borderRadius:"12px", padding:"16px", boxShadow:"0 4px 12px rgba(0,0,0,0.08)", cursor:"pointer" },
-  del:       { background:"#e74c3c", color:"white", border:"none", padding:"6px 12px", borderRadius:"6px", cursor:"pointer", marginTop:"10px" },
-  overlay:   { position:"fixed", top:0, left:0, width:"100%", height:"100%", background:"rgba(0,0,0,0.85)", zIndex:999, overflowY:"auto" },
-  full:      { background:"white", maxWidth:"700px", margin:"40px auto", borderRadius:"16px", padding:"30px" },
-  close:     { background:"#e74c3c", color:"white", border:"none", padding:"8px 16px", borderRadius:"8px", cursor:"pointer", marginBottom:"16px" },
-  footer:    { background:"#1a1a2e", color:"#aaa", textAlign:"center", padding:"20px", marginTop:"60px" }
-};
 
 export default Topic;

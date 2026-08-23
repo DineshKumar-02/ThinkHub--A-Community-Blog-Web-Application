@@ -1,59 +1,53 @@
 import { useNavigate } from "react-router-dom";
 
 const topics = [
-  { name:"Lifestyle", emoji:"🧘" }, { name:"Health", emoji:"❤️" },
-  { name:"Fitness", emoji:"💪" },   { name:"Tech", emoji:"💻" },
-  { name:"AI", emoji:"🤖" },        { name:"Cooking", emoji:"🍳" },
-  { name:"Entertainment", emoji:"🎬" }, { name:"Movie Reviews", emoji:"🎥" },
-  { name:"Music", emoji:"🎵" },     { name:"Podcast Reviews", emoji:"🎙️" },
-  { name:"Investments", emoji:"📈" }, { name:"Money", emoji:"💰" },
-  { name:"Finance", emoji:"🏦" },   { name:"Jokes", emoji:"😂" },
+  { name: "Lifestyle", emoji: "🧘" }, { name: "Health", emoji: "❤️" },
+  { name: "Fitness", emoji: "💪" },   { name: "Tech", emoji: "💻" },
+  { name: "AI", emoji: "🤖" },        { name: "Cooking", emoji: "🍳" },
+  { name: "Entertainment", emoji: "🎬" }, { name: "Movie Reviews", emoji: "🎥" },
+  { name: "Music", emoji: "🎵" },     { name: "Podcast Reviews", emoji: "🎙️" },
+  { name: "Investments", emoji: "📈" }, { name: "Money", emoji: "💰" },
+  { name: "Finance", emoji: "🏦" },   { name: "Jokes", emoji: "😂" },
 ];
 
 function Home() {
   const navigate = useNavigate();
   return (
-    <div>
-      <nav style={styles.nav}>
-        <span style={styles.logo}>📝 ThinkHub</span> 
-        <div>
-          <button style={styles.navBtn} onClick={() => navigate("/about")}>About</button>
-          <button style={styles.navBtn} onClick={() => navigate("/contact")}>Contact</button>
+    <div className="animate-fade">
+      <nav className="navbar">
+        <span className="nav-logo" onClick={() => navigate("/home")}>📝 ThinkHub</span> 
+        <div className="nav-actions">
+          <button className="btn-secondary" onClick={() => navigate("/about")}>About</button>
+          <button className="btn-secondary" onClick={() => navigate("/contact")}>Contact</button>
         </div>
       </nav>
 
-      <div style={styles.hero}>
-        <h1>Welcome to ThinkHub! ✍️</h1>
-        <p>Share your thoughts with the world</p>
-      </div>
+      <header className="hero-section">
+        <h1 className="hero-title">Welcome to ThinkHub! ✍️</h1>
+        <p className="hero-sub">A premium space to share your stories, insights, and thoughts with the world.</p>
+      </header>
 
-      <div style={styles.container}>
-        <h2>Explore Topics</h2>
-        <div style={styles.grid}>
+      <main className="app-container">
+        <h2 className="section-title">Explore Topics</h2>
+        <div className="topics-grid">
           {topics.map((t, i) => (
-            <div key={i} style={styles.circle} onClick={() => navigate("/topic/" + t.name)}>
-              <div>{t.emoji}</div><div>{t.name}</div>
+            <div 
+              key={i} 
+              className="glass-card glass-card-hover topic-tile" 
+              onClick={() => navigate("/topic/" + t.name)}
+            >
+              <span className="topic-tile-emoji">{t.emoji}</span>
+              <span className="topic-tile-name">{t.name}</span>
             </div>
           ))}
         </div>
-      </div>
+      </main>
 
-      <footer style={styles.footer}><p>© 2026 ThinkHub. All rights reserved.</p></footer>
+      <footer className="app-footer">
+        <p>© 2026 ThinkHub. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
-
-
-
-const styles = {
-  nav:       { background:"#6c63ff", padding:"16px 24px", color:"white", display:"flex", justifyContent:"space-between", alignItems:"center" },
-  logo:      { fontSize:"20px", fontWeight:"bold" },
-  navBtn:    { background:"white", color:"#6c63ff", border:"none", padding:"6px 14px", borderRadius:"8px", cursor:"pointer", marginLeft:"10px" },
-  hero:      { background:"#6c63ff", color:"white", textAlign:"center", padding:"50px 20px" },
-  container: { maxWidth:"900px", margin:"40px auto", padding:"0 20px" },
-  grid:      { display:"flex", flexWrap:"wrap", gap:"16px", justifyContent:"center", marginTop:"20px" },
-  circle:    { width:"110px", height:"110px", borderRadius:"50%", border:"2px solid #6c63ff", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", fontSize:"13px", fontWeight:"bold", color:"#6c63ff", cursor:"pointer", textAlign:"center", padding:"10px" },
-  footer:    { background:"#1a1a2e", color:"#aaa", textAlign:"center", padding:"20px", marginTop:"60px" }
-};
 
 export default Home; 

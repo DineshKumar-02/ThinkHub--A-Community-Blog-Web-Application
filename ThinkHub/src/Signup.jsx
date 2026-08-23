@@ -9,7 +9,8 @@ function Signup() {
   const [loading, setLoading] = useState(false);
   const navigate              = useNavigate();
 
-  async function handleSubmit() {
+  async function handleSubmit(e) {
+    e.preventDefault();
     if (!name || !email || !age) { alert("Please fill all fields!"); return; }
     if (age < 13) { alert("You must be at least 13!"); return; }
 
@@ -37,35 +38,63 @@ function Signup() {
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.box}>
-        <h2 style={styles.title}>📝 ThinkHub – A Community Blog Web Application
-</h2>
-        <p style={styles.sub}>Create your account</p>
-        <input style={styles.input} placeholder="Name"  onChange={e => setName(e.target.value)} disabled={loading} />
-        <input style={styles.input} placeholder="Email" type="email" onChange={e => setEmail(e.target.value)} disabled={loading} />
-        <input style={styles.input} placeholder="Age"   type="number" onChange={e => setAge(e.target.value)} disabled={loading} />
+    <div className="auth-container animate-fade">
+      <form className="glass-card auth-box animate-scale" onSubmit={handleSubmit}>
+        <div className="auth-header">
+          <h2 className="auth-title">📝 ThinkHub</h2>
+          <p className="auth-subtitle">Create an account to join the community</p>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Full Name</label>
+          <input 
+            className="form-input" 
+            placeholder="e.g. John Doe" 
+            value={name}
+            onChange={e => setName(e.target.value)} 
+            disabled={loading} 
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Email Address</label>
+          <input 
+            className="form-input" 
+            placeholder="e.g. john@example.com" 
+            type="email" 
+            value={email}
+            onChange={e => setEmail(e.target.value)} 
+            disabled={loading} 
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Age</label>
+          <input 
+            className="form-input" 
+            placeholder="Minimum age 13" 
+            type="number" 
+            value={age}
+            onChange={e => setAge(e.target.value)} 
+            disabled={loading} 
+            required
+          />
+        </div>
+
         <button 
-          style={loading ? { ...styles.btn, opacity: 0.7, cursor: "not-allowed" } : styles.btn} 
-          onClick={handleSubmit}
+          type="submit"
+          className="btn-primary" 
+          style={{ width: "100%", marginTop: "10px" }}
           disabled={loading}
         >
           {loading ? "Signing Up..." : "Sign Up"}
         </button>
-      </div>
+      </form>
     </div>
   );
 }
-
-const styles = {
-  container: { display:"flex", justifyContent:"center", alignItems:"center", height:"100vh", background:"#f0f4ff" },
-  box:       { background:"white", padding:"40px", borderRadius:"12px", boxShadow:"0 4px 12px rgba(0,0,0,0.1)", width:"320px" },
-  title:     { textAlign:"center", color:"#6c63ff", marginBottom:"4px" },
-  sub:       { textAlign:"center", color:"#888", marginBottom:"20px", fontSize:"14px" },
-  input:     { width:"100%", padding:"10px", marginBottom:"14px", border:"1px solid #ccc", borderRadius:"8px", fontSize:"15px", boxSizing:"border-box" },
-  btn:       { width:"100%", padding:"10px", background:"#6c63ff", color:"white", border:"none", borderRadius:"8px", fontSize:"15px", cursor:"pointer" }
-};
-
 
 export default Signup;
 
