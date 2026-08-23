@@ -4,7 +4,7 @@
   --font-main: 'Plus Jakarta Sans', sans-serif;
   --font-heading: 'Outfit', sans-serif;
 
-  /* Cream & Orange Color Palette */
+  /* Cream & Orange Color Palette (Light Theme) */
   --bg-deep: #fdfbf7;         /* Soft warm cream */
   --bg-dark: #f6efe2;         /* Apricot/cream shade */
   --bg-glass: rgba(255, 255, 255, 0.75);
@@ -31,6 +31,24 @@
   
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Cozy Orange/Cream Dark Theme */
+:root.dark-theme {
+  --bg-deep: #191412;         /* Warm dark chocolate */
+  --bg-dark: #261e1b;         /* Slightly lighter warm dark chocolate */
+  --bg-glass: rgba(38, 30, 27, 0.7);
+  --bg-glass-hover: rgba(51, 40, 36, 0.85);
+  --border-glass: rgba(249, 115, 22, 0.2);
+  --border-focus: rgba(249, 115, 22, 0.6);
+
+  --text-white: #fcf8f5;      /* Warm light cream for headings */
+  --text-light: #f5ebe6;      /* Soft warm light text for body */
+  --text-muted: #cbbab3;      /* Muted beige/brown secondary text */
+  --text-dark: #918077;       /* Soft grayish metadata */
+  
+  --shadow-main: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  --shadow-hover: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
 }
 
 /* Base Styles */
@@ -146,6 +164,10 @@ h1, h2, h3, h4, h5, h6 {
   transition: all var(--transition-fast);
 }
 
+:root.dark-theme .form-input {
+  background: rgba(38, 30, 27, 0.7);
+}
+
 .form-input::placeholder {
   color: var(--text-dark);
 }
@@ -154,6 +176,10 @@ h1, h2, h3, h4, h5, h6 {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(255, 111, 0, 0.2);
   background: #ffffff;
+}
+
+:root.dark-theme .form-input:focus {
+  background: var(--bg-dark);
 }
 
 /* Buttons */
@@ -206,10 +232,19 @@ h1, h2, h3, h4, h5, h6 {
   transition: all var(--transition-fast);
 }
 
+:root.dark-theme .btn-secondary {
+  background: rgba(38, 30, 27, 0.6);
+}
+
 .btn-secondary:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.9);
   border-color: rgba(249, 115, 22, 0.3);
   transform: translateY(-2px);
+}
+
+:root.dark-theme .btn-secondary:hover:not(:disabled) {
+  background: rgba(51, 40, 36, 0.9);
+  color: var(--text-white);
 }
 
 .btn-danger {
@@ -248,6 +283,11 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: background-color var(--transition-normal);
+}
+
+:root.dark-theme .navbar {
+  background: rgba(25, 20, 18, 0.85);
 }
 
 @media (max-width: 800px) {
@@ -278,6 +318,46 @@ h1, h2, h3, h4, h5, h6 {
   gap: 12px;
 }
 
+/* Cartoon-style Toggle Switch */
+.theme-toggle-btn {
+  background: #ffe0b2;
+  border: 2px solid #ff6f00;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #ff6f00; /* Bubbly cartoon 3D shadow */
+  transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+:root.dark-theme .theme-toggle-btn {
+  background: #2d1f18;
+  border-color: #ff8f00;
+  box-shadow: 0 4px 0 #ff8f00;
+}
+
+.theme-toggle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #ff6f00;
+}
+
+:root.dark-theme .theme-toggle-btn:hover {
+  box-shadow: 0 6px 0 #ff8f00;
+}
+
+.theme-toggle-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #ff6f00;
+}
+
+:root.dark-theme .theme-toggle-btn:active {
+  box-shadow: 0 2px 0 #ff8f00;
+}
+
 /* Categories Dropdown in Nav */
 .dropdown-container {
   position: relative;
@@ -289,7 +369,7 @@ h1, h2, h3, h4, h5, h6 {
   right: 0;
   width: 320px;
   margin-top: 12px;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--bg-glass);
   backdrop-filter: blur(16px);
   border: 1px solid var(--border-glass);
   border-radius: 14px;
@@ -299,6 +379,10 @@ h1, h2, h3, h4, h5, h6 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
+}
+
+:root.dark-theme .dropdown-menu {
+  background: rgba(38, 30, 27, 0.95);
 }
 
 .dropdown-item {
@@ -579,7 +663,7 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(253, 251, 247, 0.75);
+  background: rgba(25, 20, 18, 0.5); /* Cozy dim overlay */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   z-index: 1000;
@@ -587,6 +671,10 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   padding: 24px;
+}
+
+:root.dark-theme .modal-overlay {
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .modal-content {
@@ -665,6 +753,10 @@ h1, h2, h3, h4, h5, h6 {
   background-repeat: no-repeat;
 }
 
+:root.dark-theme .auth-split-container {
+  background-image: linear-gradient(rgba(25, 20, 18, 0.8), rgba(25, 20, 18, 0.85)), url('/login-bg.jpg');
+}
+
 .auth-left-panel {
   flex: 1.2;
   display: flex;
@@ -675,6 +767,10 @@ h1, h2, h3, h4, h5, h6 {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-right: 1px solid rgba(249, 115, 22, 0.1);
+}
+
+:root.dark-theme .auth-left-panel {
+  background: rgba(45, 31, 24, 0.3);
 }
 
 .auth-right-panel {

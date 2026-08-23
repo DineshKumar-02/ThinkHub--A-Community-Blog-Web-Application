@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "./config";
+import Navbar from "./Navbar";
 
 function Topic() {
   const { name }                = useParams();
@@ -70,10 +71,7 @@ function Topic() {
 
   return (
     <div className="animate-fade">
-      <nav className="navbar">
-        <span className="nav-logo" onClick={() => navigate("/home")}>📝 ThinkHub</span>
-        <button className="btn-secondary" onClick={() => navigate("/home")}>← Back</button>
-      </nav>
+      <Navbar />
 
       <header className="hero-section">
         <h1 className="hero-title">{name}</h1>

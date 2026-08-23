@@ -1,13 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 function Contact() {
   const navigate = useNavigate();
   return (
     <div className="animate-fade">
-      <nav className="navbar">
-        <span className="nav-logo" onClick={() => navigate("/home")}>📝 ThinkHub</span>
-        <button className="btn-secondary" onClick={() => navigate("/home")}>← Back</button>
-      </nav>
+      <Navbar />
 
       <main className="app-container" style={{ minHeight: "55vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div className="glass-card contact-card animate-scale" style={{ width: "100%", padding: "40px" }}>

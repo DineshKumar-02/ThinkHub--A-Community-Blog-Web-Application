@@ -1,13 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 function About() {
   const navigate = useNavigate();
   return ( 
     <div className="animate-fade">
-      <nav className="navbar">
-        <span className="nav-logo" onClick={() => navigate("/home")}>📝 ThinkHub</span>
-        <button className="btn-secondary" onClick={() => navigate("/home")}>← Back</button>
-      </nav>
+      <Navbar />
 
       <header className="hero-section">
         <h1 className="hero-title">👋 About Us</h1>
