@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "./config";
 
 function Signup() {
-  const [name, setName]       = useState("");
-  const [email, setEmail]     = useState("");
-  const [age, setAge]         = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [age, setAge] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate              = useNavigate();
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -18,14 +18,14 @@ function Signup() {
     try {
       const res = await fetch(`${API_BASE_URL}/api/users/signup`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },    
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, age })
-      }); 
+      });
 
       const data = await res.json();
 
       if (res.ok && data.success) {
-        navigate("/home"); 
+        navigate("/home");
       } else {
         alert(data.error || data.message || "Something went wrong!");
       }
@@ -47,45 +47,45 @@ function Signup() {
 
         <div className="form-group">
           <label className="form-label">Full Name</label>
-          <input 
-            className="form-input" 
-            placeholder="e.g. John Doe" 
+          <input
+            className="form-input"
+            placeholder="e.g. John Doe"
             value={name}
-            onChange={e => setName(e.target.value)} 
-            disabled={loading} 
+            onChange={e => setName(e.target.value)}
+            disabled={loading}
             required
           />
         </div>
 
         <div className="form-group">
           <label className="form-label">Email Address</label>
-          <input 
-            className="form-input" 
-            placeholder="e.g. john@example.com" 
-            type="email" 
+          <input
+            className="form-input"
+            placeholder="e.g. john@example.com"
+            type="email"
             value={email}
-            onChange={e => setEmail(e.target.value)} 
-            disabled={loading} 
+            onChange={e => setEmail(e.target.value)}
+            disabled={loading}
             required
           />
         </div>
 
         <div className="form-group">
           <label className="form-label">Age</label>
-          <input 
-            className="form-input" 
-            placeholder="Minimum age 13" 
-            type="number" 
+          <input
+            className="form-input"
+            placeholder="Minimum age 13"
+            type="number"
             value={age}
-            onChange={e => setAge(e.target.value)} 
-            disabled={loading} 
+            onChange={e => setAge(e.target.value)}
+            disabled={loading}
             required
           />
         </div>
 
-        <button 
+        <button
           type="submit"
-          className="btn-primary" 
+          className="btn-primary"
           style={{ width: "100%", marginTop: "10px" }}
           disabled={loading}
         >
@@ -97,4 +97,3 @@ function Signup() {
 }
 
 export default Signup;
-

@@ -13,6 +13,15 @@ router.post("/add", async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  try {
+    const posts = await Post.find().sort({ created_at: -1 }).limit(20);
+    res.json(posts);
+  } catch (err) {
+    res.json({ error: err.message });
+  }
+});
+
 router.get("/:topic", async (req, res) => {
   try {
     const posts = await Post.find({ topic: req.params.topic });
