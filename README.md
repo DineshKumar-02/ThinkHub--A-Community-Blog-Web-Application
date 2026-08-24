@@ -242,12 +242,12 @@ Logs a user feedback entry in the backend database.
 
 ## 📸 Screenshots
 
-> Signup Page · Home Page · Topic Page · MongoDB Compass
+> Signup Page · Home Page · Topic Page · Profile Dashboard
 
-<img width="1919" height="1018" alt="log in page" src="https://github.com/user-attachments/assets/07dd9e18-509e-40e7-a9c9-0076281ffa25" />
-<img width="1919" height="1018" alt="Main page topics" src="https://github.com/user-attachments/assets/c2cfee0b-4228-4ba1-bee8-a13cd0c983a0" />
-<img width="1919" height="1016" alt="topic post" src="https://github.com/user-attachments/assets/7388fac2-336c-4c0a-93c9-608a15d2e459" />
-<img width="1919" height="1019" alt="mongodb" src="https://github.com/user-attachments/assets/11d7ee0c-8726-4367-b37a-21a8bb6b10af" /> 
+<img width="1919" height="1018" alt="Signup and Login" src="screenshots/signup_page.png" />
+<img width="1919" height="1018" alt="Community Feed Home" src="screenshots/home_page.png" />
+<img width="1919" height="1016" alt="Topic Posts" src="screenshots/topic_page.png" />
+<img width="1919" height="1019" alt="Profile Dashboard" src="screenshots/profile_page.png" /> 
 
 ---
 
