@@ -20,12 +20,13 @@
 * 🔗 **Live Site:** [thinkhub-a-community-blog-web.onrender.com](https://thinkhub-a-community-blog-web.onrender.com/)
 * 🔗 **Backend API:** [thinkhub-a-community-blog-web-application.onrender.com](https://thinkhub-a-community-blog-web-application.onrender.com/)
 
---
+---
+
 ## 📌 About The Project
 
 **ThinkHub** is a responsive full-stack MERN blogging application developed during a **Web Developer Internship at Codec Technologies Pvt. Ltd.** 
 
-The goal was to design a clean, distraction-free space for sharing knowledge and insights. Users can register instantly, explore **14 specialized topic categories**, publish posts with rich text, and delete posts they no longer wish to share. 
+The goal was to design a clean, distraction-free space for sharing knowledge and insights. Users can register instantly, explore **14 specialized topic categories**, publish posts with rich text, and delete posts they no longer wish to share.
 
 ---
 
@@ -47,14 +48,14 @@ Discover and contribute to the following categories:
 
 ## ✨ Features
 
-* 🔐 **User Registration:** Simple signup collecting Name, Email, and Age, validated to ensure users are 13+.
-* 🏠 **Interactive Feed:** Browse, click, and inspect individual posts inside 14 topic-specific circles.
-* ✍️ **Instant Publishing:** Write and publish post titles and descriptions to any chosen topic.
-* 👁️ **Full-Screen Reader:** Click on any post card to read the full content in a centered, clean layout.
-* 🗑️ **Post Removal:** Delete posts directly from the topic feed with simple UI actions.
-* 📱 **Responsive Design:** Optimized CSS grid and flex layouts for flawless rendering on mobile, tablet, and desktop.
-* 🔗 **SPA Experience:** Fluid navigation using React Router DOM for zero-refresh page switches.
-* 💾 **Secure & Persistent Database:** Safe storage of user profiles and posts with MongoDB.
+* 🔐 **Dual-Mode Authentication:** Toggle instantly between Sign Up and Login. Signing in checks credentials passwordlessly using your email.
+* 🔍 **Live Search Dropdown:** Dynamic, glassmorphic dropdown below the search bar that updates in real-time, showing matching topics and blog post titles globally.
+* 👤 **My Profile Dashboard:** A separate user profile page displaying your Name, Username, Email, and Age, along with a feed of all stories published by you.
+* 🗑️ **Story Management:** Delete your published posts directly from the category topic feed or from your dedicated Profile Dashboard.
+* 📬 **Contact Mailer Integration:** Submit feedback forms that launch your default email client with a styled, emoji-rich, professional layout, while saving a backup log in the backend database.
+* 📱 **Cozy Light Mode Theme:** Beautiful warm ivory/cream background palette (`#fdfbf7` / `#f6f3ea`), custom translucent scrollbars, and high-contrast secondary buttons.
+* 🔗 **Full SEO Optimization:** Dynamic tag-hoisting using native React 19 elements, JSON-LD structured schemas (`WebSite`, `BreadcrumbList`, `BlogPosting`, `ProfilePage`, `ContactPage`, `AboutPage`), sitemaps, and robots.txt.
+* 💾 **Persistent Database:** Secure document management and routing with Express and MongoDB.
 
 ---
 
@@ -62,12 +63,11 @@ Discover and contribute to the following categories:
 
 | Layer | Technology | Role |
 | :--- | :--- | :--- |
-| **Frontend** | React (v19) | Component-based interactive UI |
-| **Routing** | React Router DOM (v7) | Fast, client-side routing & page navigation |
-| **Backend** | Node.js, Express.js | Robust server routing & REST API endpoints |
-| **Database** | MongoDB, Mongoose ODM | Document storage, validation schemas & relationships |
-| **Deployment** | Netlify & Render | Modern web and server hosting environments |
-| **Tools** | Git, Postman, Vite | Development environment and API testing |
+| **Frontend** | React (v19) | Component-based interactive UI with dynamic hook states |
+| **Routing** | React Router DOM (v7) | Fast client-side routing and clean URL parameter tracking |
+| **Backend** | Node.js, Express.js | Robust server routing, REST API controllers, and middleware |
+| **Database** | MongoDB, Mongoose ODM | Schema definitions, index optimizations, and document storage |
+| **Tools** | Git, Postman, Vite | Local version control, API testing, and asset bundle building |
 
 ---
 
@@ -79,26 +79,27 @@ ThinkHub--A-Community-Blog-Web-Application/
 ├── backend/                  # Node.js + Express Backend Service
 │   ├── models/               # MongoDB Document Schemas
 │   │   ├── User.js           # User schema (Name, Email, Age validation)
-│   │   └── Post.js           # Blog Post schema (Title, Description, Topic, Date)
+│   │   ├── Post.js           # Blog Post schema (Title, Description, Topic, Date)
+│   │   └── Feedback.js       # Feedback schema (Name, City, Email, Message)
 │   ├── routes/               # Express App Routing handlers
-│   │   ├── userRoute.js      # Endpoint: /api/users/signup
-│   │   └── postRoute.js      # Endpoints: GET, POST, DELETE /api/posts
+│   │   ├── userRoute.js      # Authentication endpoints & Feedback logs
+│   │   └── postRoute.js      # Post creation, retrieval, and deletion
 │   ├── .env                  # Environment configurations (Port & MongoDB URI)
 │   └── Server.js             # Server startup and MongoDB integration
 │
 └── ThinkHub/                 # Vite + React Frontend Interface
-    ├── public/               # Static assets
+    ├── public/               # Static assets (manifest.json, sitemap.xml, robots.txt)
     └── src/                  # React Application Codebase
-        ├── assets/           # Media & static assets
-        ├── App.jsx           # Application routing definition
-        ├── Signup.jsx        # Signup Page component
-        ├── Home.jsx          # Hub dashboard with topic channels
-        ├── Topic.jsx         # Post feed page for individual topics
-        ├── About.jsx         # Information page
-        ├── Contact.jsx       # User contact page
+        ├── assets/           # Media & static logos
+        ├── App.jsx           # Application routing definitions
+        ├── Signup.jsx        # Login & Signup toggle interface
+        ├── Home.jsx          # Home feed showing recent global posts & topic chips
+        ├── Topic.jsx         # Categories view with post forms & modals
+        ├── Profile.jsx       # User dashboard displaying user info & personal posts
+        ├── About.jsx         # Static about page styled like Categories page
+        ├── Contact.jsx       # Dynamic contact form with prefilled mail client triggers
         ├── config.js         # API Base URLs configuration
-        ├── index.css         # Global base styles & reset
-        ├── App.css           # Grid layouts & page component styles
+        ├── index.css         # Cozy design styling tokens, animations, and dark theme
         └── main.jsx          # React app DOM entrypoint
 ```
 
@@ -115,8 +116,8 @@ ThinkHub--A-Community-Blog-Web-Application/
 
 #### 1. Clone the Repository
 ```bash
-git clone https://github.com/DineshKumar-02/ThinkHub-Blog-App.git
-cd ThinkHub-Blog-App
+git clone https://github.com/DineshKumar-02/ThinkHub--A-Community-Blog-Web-Application.git
+cd ThinkHub--A-Community-Blog-Web-Application
 ```
 
 #### 2. Set Up the Backend
@@ -127,7 +128,6 @@ cd ThinkHub-Blog-App
    ```
 2. Create a `.env` file in the `backend` folder:
    ```env
-   # Local Database Setup
    MONGO_URI=mongodb://localhost:27017/thinkhub
    PORT=5000
    ```
@@ -163,7 +163,8 @@ Creates a new user profile.
   {
     "name": "Jane Doe",
     "email": "jane@example.com",
-    "age": 20
+    "age": 20,
+    "username": "janedoe"
   }
   ```
 * **Response (201 Created):**
@@ -175,11 +176,21 @@ Creates a new user profile.
       "_id": "64fb32c...",
       "name": "Jane Doe",
       "email": "jane@example.com",
-      "age": 20
+      "age": 20,
+      "username": "janedoe"
     }
   }
   ```
 * **Validation:** All inputs are required; the user's age must be >= 13.
+
+#### `POST /api/users/login`
+Validates registered users passwordlessly by email.
+* **Request Schema:**
+  ```json
+  {
+    "email": "jane@example.com"
+  }
+  ```
 
 ---
 
@@ -193,46 +204,37 @@ Publishes a new post under a specific topic channel.
   {
     "title": "Unlocking AI potential",
     "desc": "How modern LLMs are reshaping software engineering.",
-    "topic": "AI"
-  }
-  ```
-* **Response (200 OK):**
-  ```json
-  {
-    "success": true,
-    "post": {
-      "_id": "64fb32d...",
-      "title": "Unlocking AI potential",
-      "desc": "How modern LLMs are reshaping software engineering.",
-      "topic": "AI",
-      "date": "2026-07-02T17:30:00.000Z"
-    }
+    "topic": "AI",
+    "username": "janedoe"
   }
   ```
 
 #### `GET /api/posts/:topic`
 Retrieves all posts published under a specific topic channel.
 * **Request Param:** `topic` (e.g. `Tech`, `AI`, `Cooking`)
-* **Response (200 OK):**
-  ```json
-  [
-    {
-      "_id": "64fb32d...",
-      "title": "Unlocking AI potential",
-      "desc": "...",
-      "topic": "AI",
-      "date": "2026-07-02T17:30:00.000Z"
-    }
-  ]
-  ```
+
+#### `GET /api/posts/by-user/:username`
+Retrieves all posts written by a specific user.
+* **Request Param:** `username` (e.g. `janedoe`)
 
 #### `DELETE /api/posts/:id`
 Deletes a blog post by its unique DB ID.
 * **Request Param:** `id` (MongoDB ObjectID)
-* **Response (200 OK):**
+* **Query Param:** `username` (Required for authentication check)
+
+---
+
+### 📬 Feedback & Support
+
+#### `POST /api/users/feedback`
+Logs a user feedback entry in the backend database.
+* **Request Schema:**
   ```json
   {
-    "success": true
+    "name": "Jane Doe",
+    "city": "New York",
+    "email": "jane@example.com",
+    "feedback": "Love the clean UI!"
   }
   ```
 
@@ -260,7 +262,7 @@ During the build process, the following technical goals were met:
 
 ---
 
-## 👨‍💻 Developer Profile
+## 👨💻 Developer Profile
 
 **DineshKumar S**
 
