@@ -4,6 +4,23 @@ import { API_BASE_URL } from "./config";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
+const topicIcons = {
+  Lifestyle: "🧘",
+  Health: "❤️",
+  Fitness: "💪",
+  Tech: "💻",
+  AI: "🤖",
+  Cooking: "🍳",
+  Entertainment: "🎬",
+  "Movie Reviews": "🎥",
+  Music: "🎵",
+  "Podcast Reviews": "🎙️",
+  Investments: "📈",
+  Money: "💰",
+  Finance: "🏦",
+  Jokes: "😂"
+};
+
 function Topic() {
   const { name }                = useParams();
   const navigate                = useNavigate();
@@ -15,6 +32,8 @@ function Topic() {
   const [selected, setSelected] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
+  const emoji = topicIcons[name] || "📝";
+
   // Load posts from backend
   useEffect(() => {
     setLoading(true);
@@ -25,16 +44,33 @@ function Topic() {
       .finally(() => setLoading(false));
   }, [name]);
 
+  // Close modal on Escape key press
+  useEffect(() => {
+    if (!selected) return;
+    function handleEscape(e) {
+      if (e.key === "Escape") {
+        setSelected(null);
+      }
+    }
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [selected]);
+
   async function submitPost(e) {
     e.preventDefault();
-    if (!title || !desc) { alert("Fill all fields!"); return; }
+    if (!title || !desc) { 
+      alert("Fill all fields!"); 
+      return; 
+    }
+
+    const loggedInUsername = localStorage.getItem("username") || "Anonymous";
 
     setSubmitting(true);
     try {
       const res = await fetch(`${API_BASE_URL}/api/posts/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, desc, topic: name })
+        body: JSON.stringify({ title, desc, topic: name, username: loggedInUsername })
       });
       const data = await res.json();
 
@@ -56,13 +92,17 @@ function Topic() {
   
   async function deletePost(id) {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
+    const loggedInUsername = localStorage.getItem("username") || "Anonymous";
+    
     try {
-      const res = await fetch(`${API_BASE_URL}/api/posts/${id}`, { method: "DELETE" });
+      const res = await fetch(`${API_BASE_URL}/api/posts/${id}?username=${loggedInUsername}`, { 
+        method: "DELETE" 
+      });
       const data = await res.json();
       if (data.success) {
         setPosts(posts.filter(p => p._id !== id));
       } else {
-        alert("Failed to delete post");
+        alert(data.error || "Failed to delete post");
       }
     } catch (err) {
       console.error("Delete post error:", err);
@@ -70,55 +110,139 @@ function Topic() {
     }
   }
 
+  const currentUrl = `${window.location.origin}/topic/${name}`;
+  
+  // Breadcrumb Structured Data Schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": window.location.origin
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": name,
+        "item": currentUrl
+      }
+    ]
+  };
+
+  // Article structured schema
+  const blogSchema = selected ? {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": selected.title,
+    "description": selected.desc ? selected.desc.slice(0, 150) + "..." : "",
+    "author": {
+      "@type": "Person",
+      "name": selected.name || "Anonymous"
+    },
+    "datePublished": selected.created_at ? new Date(selected.created_at).toISOString() : new Date().toISOString()
+  } : null;
+
   return (
     <div className="animate-fade">
+      {/* React 19 Native Hoisted Meta Tags */}
+      <title>{`${name} Hub – ThinkHub`}</title>
+      <meta name="description" content={`Discover trending articles, guides, and thoughts on ${name} in the ThinkHub community.`} />
+      <link rel="canonical" href={currentUrl} />
+      
+      <meta property="og:title" content={`${name} Hub – ThinkHub`} />
+      <meta property="og:description" content={`Discover trending articles, guides, and thoughts on ${name} in the ThinkHub community.`} />
+      <meta property="og:url" content={currentUrl} />
+      
+      <meta property="twitter:title" content={`${name} Hub – ThinkHub`} />
+      <meta property="twitter:description" content={`Discover trending articles, guides, and thoughts on ${name} in the ThinkHub community.`} />
+      <meta property="twitter:url" content={currentUrl} />
+
+      {/* JSON-LD Structured Data Schema */}
+      <script type="application/ld+json">
+        {JSON.stringify(breadcrumbSchema)}
+      </script>
+
+      {blogSchema && (
+        <script type="application/ld+json">
+          {JSON.stringify(blogSchema)}
+        </script>
+      )}
+
       <Navbar />
 
-      <header className="hero-section">
-        <h1 className="hero-title">{name}</h1>
-        <p className="hero-sub">Explore articles and share your thoughts on {name}!</p>
+      <header className="hero-section" style={{ textAlign: "center", padding: "60px 24px 40px 24px" }}>
+        <span style={{ fontSize: "50px", display: "block", marginBottom: "10px" }}>{emoji}</span>
+        <h1 className="hero-title" style={{ fontSize: "40px", background: "var(--gradient-primary)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", display: "inline-block", margin: "0" }}>
+          {name} Hub
+        </h1>
+        <p className="hero-sub" style={{ maxWidth: "600px", margin: "8px auto 24px auto" }}>
+          Read trending stories and share your insights about {name}!
+        </p>
         {!showForm && (
-          <button className="btn-primary animate-fade" onClick={() => setShowForm(true)}>
+          <button 
+            className="btn-primary animate-fade" 
+            onClick={() => {
+              const user = localStorage.getItem("username");
+              if (!user) {
+                alert("Please create an account or sign up to publish posts!");
+                navigate("/");
+              } else {
+                setShowForm(true);
+              }
+            }}
+            style={{ padding: "12px 28px", fontSize: "16px", borderRadius: "12px" }}
+          >
             ➕ Create a Post
           </button>
         )}
       </header>
 
       {showForm && (
-        <form className="glass-card form-box animate-scale" onSubmit={submitPost}>
-          <h3>New Post in {name}</h3>
-          <div className="form-group">
-            <label className="form-label">Post Title</label>
-            <input 
-              className="form-input" 
-              placeholder="Give your article a catchy title" 
-              value={title}
-              onChange={e => setTitle(e.target.value)} 
-              disabled={submitting}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Content Description</label>
-            <textarea 
-              className="form-input" 
-              placeholder="What's on your mind? Share your story..." 
-              rows="6" 
-              value={desc}
-              onChange={e => setDesc(e.target.value)} 
-              disabled={submitting}
-              required
-            />
-          </div>
-          <div style={{ display: "flex", gap: "10px", marginTop: "24px" }}>
-            <button type="submit" className="btn-primary" style={{ flex: 1 }} disabled={submitting}>
-              {submitting ? "Publishing..." : "Publish Post 🚀"}
-            </button>
-            <button type="button" className="btn-secondary" onClick={() => setShowForm(false)} disabled={submitting}>
-              Cancel
-            </button>
-          </div>
-        </form>
+        <div style={{ display: "flex", justifyContent: "center", padding: "0 24px", marginBottom: "40px" }}>
+          <form className="glass-card form-box animate-scale" onSubmit={submitPost} style={{ width: "100%", maxWidth: "600px", padding: "40px", boxShadow: "var(--shadow-hover)", border: "1px solid var(--border-glass)" }}>
+            <h3 style={{ fontSize: "22px", marginBottom: "20px", color: "var(--text-white)" }}>New Post in {name}</h3>
+            
+            <div className="form-group">
+              <label htmlFor="post-title" className="form-label">Post Title</label>
+              <input 
+                id="post-title"
+                className="form-input" 
+                placeholder="Give your article a catchy title" 
+                value={title}
+                onChange={e => setTitle(e.target.value)} 
+                disabled={submitting}
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="post-desc" className="form-label">Content Description</label>
+              <textarea 
+                id="post-desc"
+                className="form-input" 
+                placeholder="What's on your mind? Share your story..." 
+                rows="6" 
+                value={desc}
+                onChange={e => setDesc(e.target.value)} 
+                disabled={submitting}
+                required
+                style={{ resize: "vertical" }}
+              />
+            </div>
+            
+            <div style={{ display: "flex", gap: "12px", marginTop: "24px" }}>
+              <button type="submit" className="btn-primary" style={{ flex: 1, padding: "12px" }} disabled={submitting}>
+                {submitting ? "Publishing..." : "Publish Post 🚀"}
+              </button>
+              <button type="button" className="btn-secondary" style={{ padding: "12px 20px" }} onClick={() => setShowForm(false)} disabled={submitting}>
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
       )}
 
       <main className="app-container">
@@ -135,25 +259,54 @@ function Topic() {
               </p>
             )}
             <div className="posts-grid">
-              {posts.map((p, i) => (
-                <article key={i} className="glass-card glass-card-hover post-card" onClick={() => setSelected(p)}>
-                  <h3 className="post-card-title">{p.title}</h3>
-                  <p className="post-card-desc">
-                    {p.desc && p.desc.length > 120 ? p.desc.slice(0, 120) + "..." : p.desc}
-                  </p>
-                  <div className="post-card-footer">
-                    <span style={{ fontSize: "12px", color: "var(--text-dark)" }}>
-                      {p.created_at ? new Date(p.created_at).toLocaleDateString() : "Just now"}
-                    </span>
-                    <button 
-                      className="btn-danger" 
-                      onClick={e => { e.stopPropagation(); deletePost(p._id); }}
-                    >
-                      🗑️ Delete
-                    </button>
-                  </div>
-                </article>
-              ))}
+              {posts.map((p, i) => {
+                const loggedInUsername = localStorage.getItem("username");
+                const canDelete = loggedInUsername && p.username === loggedInUsername;
+                return (
+                  <article 
+                    key={i} 
+                    className="glass-card glass-card-hover post-card animate-slide" 
+                    onClick={() => setSelected(p)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setSelected(p);
+                      }
+                    }}
+                    tabIndex={0}
+                    role="button"
+                    aria-label={`Read story: ${p.title} by ${p.name || "Anonymous"}`}
+                    style={{ cursor: "pointer", transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)" }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
+                      <span style={{ fontSize: "11px", background: "rgba(255, 111, 0, 0.08)", border: "1px solid rgba(255, 111, 0, 0.15)", padding: "4px 10px", borderRadius: "12px", color: "var(--color-primary)", fontWeight: "700" }}>
+                        👤 {p.name || "Anonymous"}{p.username ? ` (@${p.username})` : ""}
+                      </span>
+                    </div>
+
+                    <h3 className="post-card-title">{p.title}</h3>
+                    <p className="post-card-desc">
+                      {p.desc && p.desc.length > 120 ? p.desc.slice(0, 120) + "..." : p.desc}
+                    </p>
+                    <div className="post-card-footer" style={{ borderTop: "1px solid rgba(255, 111, 0, 0.05)", paddingTop: "14px", marginTop: "12px" }}>
+                      <span style={{ fontSize: "12px", color: "var(--text-dark)", fontWeight: "500" }}>
+                        📅 {p.created_at ? new Date(p.created_at).toLocaleDateString() : "Just now"}
+                      </span>
+                      {canDelete && (
+                        <button 
+                          className="btn-secondary" 
+                          onClick={e => { e.stopPropagation(); deletePost(p._id); }}
+                          style={{ padding: "6px 12px", fontSize: "12px", color: "var(--text-white)", background: "rgba(239, 68, 68, 0.1)", border: "1px solid rgba(239, 68, 68, 0.2)", borderRadius: "6px" }}
+                          onMouseOver={e => { e.target.style.background = "rgba(239, 68, 68, 0.2)"; }}
+                          onMouseOut={e => { e.target.style.background = "rgba(239, 68, 68, 0.1)"; }}
+                        >
+                          🗑️ Delete
+                        </button>
+                      )}
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </>
         )}
@@ -162,9 +315,13 @@ function Topic() {
       {selected && (
         <div className="modal-overlay animate-fade" onClick={() => setSelected(null)}>
           <div className="glass-card modal-content animate-scale" onClick={e => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelected(null)}>✕</button>
+            <button className="modal-close" onClick={() => setSelected(null)} aria-label="Close details modal">✕</button>
             <h2 className="modal-title">{selected.title}</h2>
-            <div style={{ display: "flex", gap: "10px", marginBottom: "20px", color: "var(--text-dark)", fontSize: "13px" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "20px", color: "var(--text-dark)", fontSize: "13px", alignItems: "center" }}>
+              <span style={{ background: "rgba(255, 111, 0, 0.08)", color: "var(--color-primary)", padding: "4px 10px", borderRadius: "12px", fontWeight: "700" }}>
+                👤 {selected.name || "Anonymous"}{selected.username ? ` (@${selected.username})` : ""}
+              </span>
+              <span>•</span>
               <span>Category: <strong>{name}</strong></span>
               <span>•</span>
               <span>Published: {selected.created_at ? new Date(selected.created_at).toLocaleDateString() : "Unknown"}</span>
