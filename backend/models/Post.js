@@ -4,6 +4,7 @@ const PostSchema = new mongoose.Schema({
   title:      String,
   desc:       String,
   topic:      { type: String, index: true },
+  username:   String,
   created_at: { type: Date, default: Date.now }
 });
 

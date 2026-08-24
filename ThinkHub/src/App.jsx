@@ -4,6 +4,7 @@ import Home from "./Home";
 import Topic from "./Topic";
 import About from "./About";
 import Contact from "./Contact";
+import Profile from "./Profile";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/topic/:name" element={<Topic />} />
         <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} /> 
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

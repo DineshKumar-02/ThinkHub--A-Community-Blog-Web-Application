@@ -1,0 +1,15 @@
+{
+  "short_name": "ThinkHub",
+  "name": "ThinkHub – Community Blog Web Application",
+  "icons": [
+    {
+      "src": "/thinkhub-logo.jpg",
+      "type": "image/jpeg",
+      "sizes": "278x278"
+    }
+  ],
+  "start_url": "/home",
+  "background_color": "#f8fafc",
+  "theme_color": "#ff6f00",
+  "display": "standalone"
+}
