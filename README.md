@@ -15,18 +15,11 @@
 
 ---
 
-## 🌐 Live Demo & Deployment Links
-
-* 🔗 **Live Site:** [thinkhub-a-community-blog-web.onrender.com](https://thinkhub-a-community-blog-web.onrender.com/)
-* 🔗 **Backend API:** [thinkhub-a-community-blog-web-application.onrender.com](https://thinkhub-a-community-blog-web-application.onrender.com/)
-
----
-
 ## 📌 About The Project
 
-**ThinkHub** is a responsive full-stack MERN blogging application developed during a **Web Developer Internship at Codec Technologies Pvt. Ltd.** 
+**ThinkHub** is a responsive full-stack MERN blogging application.
 
-The goal was to design a clean, distraction-free space for sharing knowledge and insights. Users can register instantly, explore **14 specialized topic categories**, publish posts with rich text, and delete posts they no longer wish to share.
+The goal is to design a clean, distraction-free space for sharing knowledge and insights. Users can register instantly, explore **14 specialized topic categories**, publish posts with rich text, and delete posts they no longer wish to share.
 
 ---
 
@@ -105,6 +98,95 @@ ThinkHub--A-Community-Blog-Web-Application/
 
 ---
 
+## 🚀 Getting Started
+
+### 📋 Prerequisites
+* **Node.js** (v18.0.0 or higher recommended)
+* **npm** or **yarn**
+* **MongoDB Local Installation** or a **MongoDB Atlas Database Connection**
+
+### ⚙️ Installation & Configuration
+
+#### 1. Clone the Repository
+```bash
+git clone https://github.com/DineshKumar-02/ThinkHub--A-Community-Blog-Web-Application.git
+cd ThinkHub--A-Community-Blog-Web-Application
+```
+
+#### 2. Set Up the Backend
+1. Navigate to the backend folder:
+   ```bash
+   cd backend
+   npm install
+   ```
+2. Create a `.env` file in the `backend` folder:
+   ```env
+   MONGO_URI=mongodb://localhost:27017/thinkhub
+   PORT=5000
+   ```
+3. Start the backend server:
+   ```bash
+   node Server.js
+   ```
+   *(Expected log: `MongoDB Connected!` & `Server running on port 5000`)*
+
+#### 3. Set Up the Frontend
+1. In a new terminal window, navigate to the `ThinkHub` directory:
+   ```bash
+   cd ThinkHub
+   npm install
+   ```
+2. Start the Vite development server:
+   ```bash
+   npm run dev
+   ```
+3. Open your browser and navigate to `http://localhost:5173` to explore the app.
+
+---
+
+## 📡 API Endpoints & Usage
+
+### 🔐 User Authentication
+
+#### `POST /api/users/signup`
+Creates a new user profile.
+* **Payload Format:** JSON
+* **Request Schema:**
+  ```json
+  {
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "age": 20,
+    "username": "janedoe"
+  }
+  ```
+* **Response (201 Created):**
+  ```json
+  {
+    "success": true,
+    "message": "Signup successful",
+    "user": {
+      "_id": "64fb32c...",
+      "name": "Jane Doe",
+      "email": "jane@example.com",
+      "age": 20,
+      "username": "janedoe"
+    }
+  }
+  ```
+* **Validation:** All inputs are required; the user's age must be >= 13.
+
+#### `POST /api/users/login`
+Validates registered users passwordlessly by email.
+* **Request Schema:**
+  ```json
+  {
+    "email": "jane@example.com"
+  }
+  ```
+
+---
+
 ### ✍️ Blog Posts Management
 
 #### `POST /api/posts/add`
@@ -170,16 +252,6 @@ During the build process, the following technical goals were met:
 * **State & Navigation Control:** Leveraged React Router DOM for routing configurations, ensuring consistent views without page reloads.
 * **Database Management:** Used Mongoose ODM for queries, deletion routines, and mapping connections safely.
 * **Vite Tooling:** Handled project creation and configurations with Vite for optimal developer workflow.
-
----
-
-## 👨💻 Developer Profile
-
-**DineshKumar S**
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/dinesh45)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/DineshKumar-02)
-[![Portfolio](https://img.shields.io/badge/Portfolio-6C63FF?style=for-the-badge&logo=google-chrome&logoColor=white)](https://dineshkumar-portfolio2706.netlify.app)
 
 ---
 

@@ -138,30 +138,38 @@ function Home() {
           <h2 className="section-title">Community Stories</h2>
           
           {/* Interactive Topic Filter Chips */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", margin: "16px 0 24px 0" }}>
-            <span style={{ fontSize: "14px", color: "var(--text-muted)", alignSelf: "center", marginRight: "8px" }}>
+          <div style={{ 
+            display: "flex", 
+            flexWrap: "wrap", 
+            alignItems: "center",
+            gap: "8px", 
+            margin: "12px 0 20px 0" 
+          }}>
+            <span style={{ fontSize: "13px", color: "var(--text-muted)", marginRight: "4px", fontWeight: "600" }}>
               Filter by topic:
             </span>
-            {["All", "Tech", "AI", "Lifestyle", "Finance", "Music", "Cooking"].map((topic, i) => {
-              const isActive = (selectedTopic.toLowerCase() === topic.toLowerCase());
-              return (
-                <button 
-                  key={i} 
-                  className="btn-secondary" 
-                  style={{ 
-                    padding: "4px 12px", 
-                    fontSize: "12px", 
-                    borderRadius: "15px",
-                    background: isActive ? "var(--color-primary)" : "",
-                    color: isActive ? "#ffffff" : "",
-                    borderColor: isActive ? "var(--color-primary)" : ""
-                  }}
-                  onClick={() => setSelectedTopic(topic)}
-                >
-                  {topic}
-                </button>
-              );
-            })}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+              {["All", "Tech", "AI", "Lifestyle", "Finance", "Music", "Cooking"].map((topic, i) => {
+                const isActive = (selectedTopic.toLowerCase() === topic.toLowerCase());
+                return (
+                  <button 
+                    key={i} 
+                    className="btn-secondary" 
+                    style={{ 
+                      padding: "5px 12px", 
+                      fontSize: "12px", 
+                      borderRadius: "15px",
+                      background: isActive ? "var(--color-primary)" : "",
+                      color: isActive ? "#ffffff" : "",
+                      borderColor: isActive ? "var(--color-primary)" : ""
+                    }}
+                    onClick={() => setSelectedTopic(topic)}
+                  >
+                    {topic}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {postsLoading ? (
@@ -192,7 +200,7 @@ function Home() {
                     style={{ cursor: "pointer" }}
                   >
                     <div className="flex-post-main">
-                      <div style={{ display: "flex", gap: "8px", alignItems: "center", marginBottom: "8px" }}>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", alignItems: "center", marginBottom: "8px" }}>
                         <span className="flex-post-tag">{p.topic}</span>
                         <span style={{ fontSize: "11px", background: "rgba(255, 111, 0, 0.08)", border: "1px solid rgba(255, 111, 0, 0.15)", padding: "2px 8px", borderRadius: "10px", color: "var(--color-primary)", fontWeight: "600" }}>
                           👤 {p.name || "Anonymous"}{p.username ? ` (@${p.username})` : ""}
@@ -204,7 +212,7 @@ function Home() {
                       </p>
                     </div>
                     <div className="flex-post-actions" onClick={e => e.stopPropagation()}>
-                      <span style={{ fontSize: "13px", color: "var(--text-dark)" }}>
+                      <span style={{ fontSize: "12px", color: "var(--text-dark)", whiteSpace: "nowrap" }}>
                         {p.created_at ? new Date(p.created_at).toLocaleDateString() : "Just now"}
                       </span>
                       <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
@@ -242,8 +250,8 @@ function Home() {
           <div className="glass-card modal-content animate-scale" onClick={e => e.stopPropagation()}>
             <button className="modal-close" onClick={() => setSelectedPost(null)} aria-label="Close details modal">✕</button>
             <h2 className="modal-title">{selectedPost.title}</h2>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "20px", color: "var(--text-dark)", fontSize: "13px", alignItems: "center" }}>
-              <span style={{ background: "rgba(255, 111, 0, 0.08)", color: "var(--color-primary)", padding: "4px 10px", borderRadius: "12px", fontWeight: "700" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "16px", color: "var(--text-dark)", fontSize: "13px", alignItems: "center" }}>
+              <span style={{ background: "rgba(255, 111, 0, 0.08)", color: "var(--color-primary)", padding: "3px 10px", borderRadius: "12px", fontWeight: "700" }}>
                 👤 {selectedPost.name || "Anonymous"}{selectedPost.username ? ` (@${selectedPost.username})` : ""}
               </span>
               <span>•</span>
@@ -262,4 +270,4 @@ function Home() {
   );
 }
 
-export default Home; 
+export default Home;

@@ -84,18 +84,18 @@ function Contact() {
 
       <Navbar />
 
-      <header className="hero-section" style={{ textAlign: "center", padding: "60px 24px 40px 24px" }}>
-        <span style={{ fontSize: "50px", display: "block", marginBottom: "10px" }}>📬</span>
-        <h1 className="hero-title" style={{ fontSize: "40px", background: "var(--gradient-primary)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", display: "inline-block", margin: "0" }}>
+      <header className="hero-section">
+        <span style={{ fontSize: "clamp(36px, 8vw, 50px)", display: "block", marginBottom: "8px" }}>📬</span>
+        <h1 className="hero-title">
           Contact Us
         </h1>
-        <p className="hero-sub" style={{ maxWidth: "600px", margin: "10px auto 0 auto" }}>Have something to say? Reach out!</p>
+        <p className="hero-sub">Have something to say? Reach out!</p>
       </header>
 
-      <main className="app-container" style={{ display: "flex", justifyContent: "center", paddingBottom: "40px" }}>
-        <section className="glass-card animate-scale" style={{ padding: "40px", width: "100%", maxWidth: "600px", textAlign: "left" }}>
-          <div style={{ textAlign: "center", marginBottom: "24px" }}>
-            <h2 style={{ fontSize: "22px", color: "var(--text-white)", margin: "0 0 8px 0" }}>Send Feedback</h2>
+      <main className="app-container" style={{ display: "flex", justifyContent: "center", paddingBottom: "20px" }}>
+        <section className="glass-card animate-scale" style={{ padding: "clamp(20px, 4vw, 36px)", width: "100%", maxWidth: "580px", textAlign: "left" }}>
+          <div style={{ textAlign: "center", marginBottom: "20px" }}>
+            <h2 style={{ fontSize: "clamp(18px, 3vw, 22px)", color: "var(--text-white)", margin: "0 0 6px 0" }}>Send Feedback</h2>
             <p style={{ color: "var(--text-muted)", fontSize: "14px", margin: "0" }}>
               Fill in the fields below to compose and send your feedback directly.
             </p>
@@ -160,7 +160,7 @@ function Contact() {
             <button
               type="submit"
               className="btn-primary"
-              style={{ width: "100%", marginTop: "10px", padding: "14px" }}
+              style={{ width: "100%", marginTop: "10px", padding: "12px" }}
               disabled={submitting}
             >
               {submitting ? "Sending Feedback..." : "Send Feedback 🚀"}

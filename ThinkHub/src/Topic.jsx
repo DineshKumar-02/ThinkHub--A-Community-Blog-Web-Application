@@ -173,12 +173,12 @@ function Topic() {
 
       <Navbar />
 
-      <header className="hero-section" style={{ textAlign: "center", padding: "60px 24px 40px 24px" }}>
-        <span style={{ fontSize: "50px", display: "block", marginBottom: "10px" }}>{emoji}</span>
-        <h1 className="hero-title" style={{ fontSize: "40px", background: "var(--gradient-primary)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", display: "inline-block", margin: "0" }}>
+      <header className="hero-section">
+        <span style={{ fontSize: "clamp(36px, 8vw, 50px)", display: "block", marginBottom: "8px" }}>{emoji}</span>
+        <h1 className="hero-title">
           {name} Hub
         </h1>
-        <p className="hero-sub" style={{ maxWidth: "600px", margin: "8px auto 24px auto" }}>
+        <p className="hero-sub">
           Read trending stories and share your insights about {name}!
         </p>
         {!showForm && (
@@ -193,7 +193,7 @@ function Topic() {
                 setShowForm(true);
               }
             }}
-            style={{ padding: "12px 28px", fontSize: "16px", borderRadius: "12px" }}
+            style={{ padding: "12px 24px", fontSize: "15px", borderRadius: "12px" }}
           >
             ➕ Create a Post
           </button>
@@ -201,9 +201,9 @@ function Topic() {
       </header>
 
       {showForm && (
-        <div style={{ display: "flex", justifyContent: "center", padding: "0 24px", marginBottom: "40px" }}>
-          <form className="glass-card form-box animate-scale" onSubmit={submitPost} style={{ width: "100%", maxWidth: "600px", padding: "40px", boxShadow: "var(--shadow-hover)", border: "1px solid var(--border-glass)" }}>
-            <h3 style={{ fontSize: "22px", marginBottom: "20px", color: "var(--text-white)" }}>New Post in {name}</h3>
+        <div className="app-container" style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+          <form className="glass-card form-box animate-scale" onSubmit={submitPost} style={{ border: "1px solid var(--border-glass)" }}>
+            <h3 style={{ color: "var(--text-white)" }}>New Post in {name}</h3>
             
             <div className="form-group">
               <label htmlFor="post-title" className="form-label">Post Title</label>
@@ -233,11 +233,11 @@ function Topic() {
               />
             </div>
             
-            <div style={{ display: "flex", gap: "12px", marginTop: "24px" }}>
-              <button type="submit" className="btn-primary" style={{ flex: 1, padding: "12px" }} disabled={submitting}>
+            <div style={{ display: "flex", gap: "10px", marginTop: "20px", flexWrap: "wrap" }}>
+              <button type="submit" className="btn-primary" style={{ flex: "1 1 160px", padding: "12px" }} disabled={submitting}>
                 {submitting ? "Publishing..." : "Publish Post 🚀"}
               </button>
-              <button type="button" className="btn-secondary" style={{ padding: "12px 20px" }} onClick={() => setShowForm(false)} disabled={submitting}>
+              <button type="button" className="btn-secondary" style={{ flex: "1 1 100px", padding: "12px 20px" }} onClick={() => setShowForm(false)} disabled={submitting}>
                 Cancel
               </button>
             </div>
@@ -279,7 +279,7 @@ function Topic() {
                     style={{ cursor: "pointer", transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)" }}
                   >
                     <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
-                      <span style={{ fontSize: "11px", background: "rgba(255, 111, 0, 0.08)", border: "1px solid rgba(255, 111, 0, 0.15)", padding: "4px 10px", borderRadius: "12px", color: "var(--color-primary)", fontWeight: "700" }}>
+                      <span style={{ fontSize: "11px", background: "rgba(255, 111, 0, 0.08)", border: "1px solid rgba(255, 111, 0, 0.15)", padding: "3px 8px", borderRadius: "10px", color: "var(--color-primary)", fontWeight: "700" }}>
                         👤 {p.name || "Anonymous"}{p.username ? ` (@${p.username})` : ""}
                       </span>
                     </div>
@@ -288,7 +288,7 @@ function Topic() {
                     <p className="post-card-desc">
                       {p.desc && p.desc.length > 120 ? p.desc.slice(0, 120) + "..." : p.desc}
                     </p>
-                    <div className="post-card-footer" style={{ borderTop: "1px solid rgba(255, 111, 0, 0.05)", paddingTop: "14px", marginTop: "12px" }}>
+                    <div className="post-card-footer" style={{ borderTop: "1px solid rgba(255, 111, 0, 0.08)", paddingTop: "12px", marginTop: "12px" }}>
                       <span style={{ fontSize: "12px", color: "var(--text-dark)", fontWeight: "500" }}>
                         📅 {p.created_at ? new Date(p.created_at).toLocaleDateString() : "Just now"}
                       </span>
@@ -296,7 +296,7 @@ function Topic() {
                         <button 
                           className="btn-secondary" 
                           onClick={e => { e.stopPropagation(); deletePost(p._id); }}
-                          style={{ padding: "6px 12px", fontSize: "12px", color: "var(--text-white)", background: "rgba(239, 68, 68, 0.1)", border: "1px solid rgba(239, 68, 68, 0.2)", borderRadius: "6px" }}
+                          style={{ padding: "5px 10px", fontSize: "12px", color: "var(--text-white)", background: "rgba(239, 68, 68, 0.1)", border: "1px solid rgba(239, 68, 68, 0.2)", borderRadius: "6px" }}
                           onMouseOver={e => { e.target.style.background = "rgba(239, 68, 68, 0.2)"; }}
                           onMouseOut={e => { e.target.style.background = "rgba(239, 68, 68, 0.1)"; }}
                         >
@@ -317,8 +317,8 @@ function Topic() {
           <div className="glass-card modal-content animate-scale" onClick={e => e.stopPropagation()}>
             <button className="modal-close" onClick={() => setSelected(null)} aria-label="Close details modal">✕</button>
             <h2 className="modal-title">{selected.title}</h2>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "20px", color: "var(--text-dark)", fontSize: "13px", alignItems: "center" }}>
-              <span style={{ background: "rgba(255, 111, 0, 0.08)", color: "var(--color-primary)", padding: "4px 10px", borderRadius: "12px", fontWeight: "700" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "16px", color: "var(--text-dark)", fontSize: "13px", alignItems: "center" }}>
+              <span style={{ background: "rgba(255, 111, 0, 0.08)", color: "var(--color-primary)", padding: "3px 10px", borderRadius: "12px", fontWeight: "700" }}>
                 👤 {selected.name || "Anonymous"}{selected.username ? ` (@${selected.username})` : ""}
               </span>
               <span>•</span>

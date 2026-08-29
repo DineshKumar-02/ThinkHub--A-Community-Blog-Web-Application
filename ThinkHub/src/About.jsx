@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
@@ -36,22 +36,23 @@ function About() {
 
       <Navbar />
 
-      <header className="hero-section" style={{ textAlign: "center", padding: "60px 24px 40px 24px" }}>
-        <span style={{ fontSize: "50px", display: "block", marginBottom: "10px" }}>👋</span>
-        <h1 className="hero-title" style={{ fontSize: "40px", background: "var(--gradient-primary)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", display: "inline-block", margin: "0" }}>
+      <header className="hero-section">
+        <span style={{ fontSize: "clamp(36px, 8vw, 50px)", display: "block", marginBottom: "8px" }}>👋</span>
+        <h1 className="hero-title">
           About Us
         </h1>
+        <p className="hero-sub">Get to know the vision and heart behind the platform.</p>
       </header>
 
       <main className="app-container">
-        <section className="glass-card animate-scale" style={{ padding: "40px", marginBottom: "40px" }}>
-          <p style={{ fontSize: "16px", color: "var(--text-light)", lineHeight: "1.8", marginBottom: "16px" }}>
+        <section className="glass-card animate-scale" style={{ padding: "clamp(20px, 4vw, 36px)", marginBottom: "30px" }}>
+          <p style={{ fontSize: "15px", color: "var(--text-light)", lineHeight: "1.8", marginBottom: "16px" }}>
             Hey there! Welcome to ThinkHub — a place where anyone can come and share what's on their mind.
           </p>
-          <p style={{ fontSize: "16px", color: "var(--text-light)", lineHeight: "1.8", marginBottom: "16px" }}>
+          <p style={{ fontSize: "15px", color: "var(--text-light)", lineHeight: "1.8", marginBottom: "16px" }}>
             Whether it's something you learned today, a random thought, an opinion or just a cool story — this is your space to share it!
           </p>
-          <p style={{ fontSize: "16px", color: "var(--text-light)", lineHeight: "1.8", marginBottom: "0" }}>
+          <p style={{ fontSize: "15px", color: "var(--text-light)", lineHeight: "1.8", marginBottom: "0" }}>
             No rules, no pressure. Just real people sharing real stuff. Every voice matters here. 🙌
           </p>
         </section>

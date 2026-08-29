@@ -86,29 +86,29 @@ function Profile() {
 
       <Navbar />
 
-      <main className="app-container" style={{ padding: "40px 24px" }}>
+      <main className="app-container">
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: "30px",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))",
+          gap: "24px",
           alignItems: "start",
           width: "100%",
           maxWidth: "1000px",
           margin: "0 auto"
         }}>
           {/* Column 1: Account Information */}
-          <div className="glass-card animate-scale" style={{ padding: "35px", textAlign: "center", border: "1px solid var(--border-glass)" }}>
+          <div className="glass-card animate-scale" style={{ padding: "clamp(20px, 4vw, 35px)", textAlign: "center", border: "1px solid var(--border-glass)" }}>
             
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px" }}>
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
               <div style={{ 
-                width: "90px", 
-                height: "90px", 
+                width: "80px", 
+                height: "80px", 
                 borderRadius: "50%", 
                 background: "var(--gradient-primary)", 
                 display: "flex", 
                 alignItems: "center", 
                 justifyContent: "center", 
-                fontSize: "38px",
+                fontSize: "34px",
                 boxShadow: "0 8px 24px rgba(255, 111, 0, 0.2)",
                 border: "3px solid rgba(255, 111, 0, 0.3)"
               }}>
@@ -116,44 +116,44 @@ function Profile() {
               </div>
             </div>
 
-            <h1 className="hero-title" style={{ fontSize: "28px", marginBottom: "6px" }}>{name}</h1>
-            <p style={{ color: "var(--color-primary)", fontWeight: "700", fontSize: "15px", marginBottom: "24px" }}>@{username}</p>
+            <h1 className="hero-title" style={{ fontSize: "clamp(20px, 3.5vw, 28px)", marginBottom: "4px" }}>{name}</h1>
+            <p style={{ color: "var(--color-primary)", fontWeight: "700", fontSize: "14px", marginBottom: "20px" }}>@{username}</p>
 
             <div style={{ 
               textAlign: "left", 
               background: "rgba(255, 255, 255, 0.4)", 
               borderRadius: "12px", 
-              padding: "20px", 
-              marginBottom: "24px",
+              padding: "16px", 
+              marginBottom: "20px",
               border: "1px solid var(--border-glass)"
             }}>
-              <h2 style={{ fontSize: "16px", marginBottom: "14px", color: "var(--text-white)", borderBottom: "1px solid var(--border-glass)", paddingBottom: "8px" }}>
+              <h2 style={{ fontSize: "15px", marginBottom: "12px", color: "var(--text-white)", borderBottom: "1px solid var(--border-glass)", paddingBottom: "8px" }}>
                 Account Information
               </h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: "12px", fontSize: "14px", color: "var(--text-light)" }}>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px", fontSize: "13.5px", color: "var(--text-light)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "4px" }}>
                   <strong>Full Name:</strong> 
                   <span>{name}</span>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "4px" }}>
                   <strong>Username:</strong> 
                   <span>@{username}</span>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "4px" }}>
                   <strong>Email Address:</strong> 
-                  <span style={{ wordBreak: "break-all", marginLeft: "10px", textAlign: "right" }}>{email}</span>
+                  <span style={{ wordBreak: "break-all" }}>{email}</span>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "4px" }}>
                   <strong>Age:</strong> 
                   <span>{age} years old</span>
                 </div>
               </div>
             </div>
 
-            <div style={{ display: "flex", gap: "12px" }}>
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
               <button 
                 className="btn-primary" 
-                style={{ flex: 1, padding: "12px" }}
+                style={{ flex: "1 1 140px", padding: "12px" }}
                 onClick={() => navigate("/home")}
               >
                 Go to Feed 🏠
@@ -162,10 +162,11 @@ function Profile() {
               <button 
                 className="btn-secondary" 
                 style={{ 
-                  padding: "12px 20px", 
+                  flex: "1 1 100px",
+                  padding: "12px 16px", 
                   color: "#dc2626", 
                   background: "rgba(239, 68, 68, 0.08)", 
-                  border: "1px solid rgba(239, 68, 68, 0.15)",
+                  border: "1px solid rgba(239, 68, 68, 0.18)",
                   borderRadius: "10px"
                 }}
                 onClick={() => {
@@ -182,8 +183,8 @@ function Profile() {
           </div>
 
           {/* Column 2: User's Published Stories */}
-          <div className="glass-card animate-scale" style={{ padding: "35px", border: "1px solid var(--border-glass)", minHeight: "450px" }}>
-            <h2 style={{ fontSize: "20px", marginBottom: "20px", color: "var(--text-white)", borderBottom: "1px solid var(--border-glass)", paddingBottom: "10px", textAlign: "left" }}>
+          <div className="glass-card animate-scale" style={{ padding: "clamp(20px, 4vw, 35px)", border: "1px solid var(--border-glass)", minHeight: "380px" }}>
+            <h2 style={{ fontSize: "clamp(17px, 3vw, 20px)", marginBottom: "18px", color: "var(--text-white)", borderBottom: "1px solid var(--border-glass)", paddingBottom: "10px", textAlign: "left" }}>
               My Stories 📝 ({userPosts.length})
             </h2>
             
@@ -192,21 +193,21 @@ function Profile() {
                 Loading your stories... ⏳
               </p>
             ) : userPosts.length === 0 ? (
-              <div style={{ textAlign: "center", color: "var(--text-muted)", marginTop: "60px" }}>
-                <p style={{ fontSize: "15px", marginBottom: "16px" }}>You haven't shared any stories yet!</p>
+              <div style={{ textAlign: "center", color: "var(--text-muted)", marginTop: "40px" }}>
+                <p style={{ fontSize: "14px", marginBottom: "16px" }}>You haven't shared any stories yet!</p>
                 <button className="btn-secondary" onClick={() => navigate("/home")} style={{ fontSize: "13px" }}>
                   Browse Topics & Write ✍️
                 </button>
               </div>
             ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: "16px", maxHeight: "500px", overflowY: "auto", paddingRight: "4px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "14px", maxHeight: "500px", overflowY: "auto", paddingRight: "4px" }}>
                 {userPosts.map((post) => (
                    <div 
                      key={post._id} 
                      style={{ 
                        background: "rgba(255, 255, 255, 0.4)", 
                        borderRadius: "10px", 
-                       padding: "16px", 
+                       padding: "14px", 
                        border: "1px solid var(--border-glass)",
                        textAlign: "left",
                        display: "flex",
@@ -214,7 +215,7 @@ function Profile() {
                        gap: "8px"
                      }}
                    >
-                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", gap: "12px" }}>
+                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
                        <span style={{ 
                          fontSize: "11px", 
                          background: "rgba(255, 111, 0, 0.1)", 
@@ -234,7 +235,7 @@ function Profile() {
                          🗑️ Delete
                        </button>
                      </div>
-                     <h3 style={{ fontSize: "16px", color: "var(--text-white)", margin: "0", fontWeight: "700" }}>
+                     <h3 style={{ fontSize: "15px", color: "var(--text-white)", margin: "0", fontWeight: "700", overflowWrap: "break-word" }}>
                        {post.title}
                      </h3>
                      <p style={{ 
@@ -246,7 +247,8 @@ function Profile() {
                        WebkitBoxOrient: "vertical",
                        overflow: "hidden",
                        textOverflow: "ellipsis",
-                       lineHeight: "1.5"
+                       lineHeight: "1.5",
+                       overflowWrap: "break-word"
                      }}>
                        {post.desc}
                      </p>
